@@ -1,5 +1,5 @@
 import express from "express";
-import { createStory } from "../controllers/story.controller.js";
+import { createFemelProfile } from "../controllers/profile.controller.js";
 import { Auth } from "../middleware/auth.js";
 import rateLimit from "express-rate-limit";
 const router = express.Router();
@@ -10,6 +10,6 @@ const limiter = rateLimit({
   message: "limit reched, please try after some time!",
 });
 
-router.post("/create", Auth, limiter, createStory);
+router.post("/create", createFemelProfile);
 
 export default router;

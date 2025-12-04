@@ -4,16 +4,19 @@ import jwt from "jsonwebtoken";
 import { sendMail } from "../utils/sendMail.js";
 
 export const createUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, gender, email, password } = req.body;
   try {
-    const user = await User.findOne({
-      $or: [{ email: email }, { name: name }],
-    });
+    const user = await User.findOne({email});
     if (user) {
       return res.status(409).json({ message: "User already exit" });
     }
     const passwordHatched = await bcrypt.hash(password, 10);
-    const newUser = new User({ name, email, password: passwordHatched });
+    const newUser = new User({
+      name,
+      gender,
+      email,
+      password: passwordHatched,
+    });
     await newUser.save();
     return res
       .status(201)
